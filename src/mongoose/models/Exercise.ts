@@ -9,7 +9,7 @@ const ExerciseSchema = new Schema(
     description: { type: String, },
     muscle: { type: String, },
     equipment: { type: String },
-    difficulty: { type: Number, enum: [1, 2, 3, 4, 5] },
+    difficulty: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
     videoUrl: { type: String },
   },
   {
