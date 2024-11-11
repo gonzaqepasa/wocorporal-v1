@@ -13,7 +13,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
         description: '',
         muscles: '',
         equipment: '',
-        difficulty: 1,
+        difficulty: 0,
         videoUrl: '',
     });
 
@@ -33,7 +33,14 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    name: formData.name,
+                    description: formData.description,
+                    muscles: formData.muscles,
+                    equipment: formData.equipment,
+                    difficulty: formData.difficulty,
+                    videoUrl: formData.videoUrl,
+                }),
             });
 
             if (response.ok) {
@@ -42,7 +49,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
                     description: '',
                     muscles: '',
                     equipment: '',
-                    difficulty: 1,
+                    difficulty: 0,
                     videoUrl: '',
                 });
                 onSuccess(); // Llamada de retorno en caso de éxito
