@@ -1,6 +1,7 @@
 // pages/index.tsx
 import ExerciseList from "@/components/AddExercises/ExercisesList";
 import NavBarExercises from "@/components/Navs/NavExercises";
+import { url } from "@/config/env_d";
 import { GetServerSideProps } from "next";
 
 interface Exercise {
@@ -21,7 +22,7 @@ interface ExerciseListPageProps {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // Reemplaza 'YOUR_API_ENDPOINT' con tu URL de API para obtener los ejercicios.
-    const response = await fetch(`/api/exercises`);
+    const response = await fetch(`${url}/api/exercises`);
 
     if (!response.ok) {
       throw new Error("Error al cargar los ejercicios");
