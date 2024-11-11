@@ -35,6 +35,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    console.log(error)
     return {
       props: { exercises: [], error: error.message || "Hubo un problema al cargar los ejercicios" },
     };
