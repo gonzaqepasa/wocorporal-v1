@@ -21,7 +21,7 @@ interface ExerciseListPageProps {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // Reemplaza 'YOUR_API_ENDPOINT' con tu URL de API para obtener los ejercicios.
-    const response = await fetch(`http:localhost:3000/api/exercises`);
+    const response = await fetch(`/api/exercises`);
 
     if (!response.ok) {
       throw new Error("Error al cargar los ejercicios");
