@@ -1,4 +1,5 @@
 // components/ExerciseForm.tsx
+import { showErrorAlert, showSuccessAlert } from '@/utils/SweetAlertUtils';
 import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react';
 import React, { useState } from 'react';
 
@@ -45,10 +46,14 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
                     videoUrl: '',
                 });
                 onSuccess(); // Llamada de retorno en caso de éxito
+                showSuccessAlert("El ejercicio se agrego correctamente")
             } else {
                 console.error('Error al agregar el ejercicio');
+
+                showErrorAlert('Ocurrió un error inesperado')
             }
         } catch (error) {
+            showErrorAlert((error as Error).message || 'Ocurrió un error inesperado')
             console.error('Error:', error);
         }
     };
