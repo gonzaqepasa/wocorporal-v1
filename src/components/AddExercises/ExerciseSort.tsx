@@ -1,3 +1,4 @@
+import { Select, SelectItem } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -22,14 +23,14 @@ const ExerciseSorter: React.FC<ExerciseSorterProps> = ({ sortOptions }) => {
 
   return (
     <div className="mb-4">
-      <label htmlFor="sort" className="mr-2">Ordenar por:</label>
-      <select id="sort" onChange={handleSortChange} className="p-2 border rounded">
+     
+      <Select id="sort" variant='flat' color='primary' label='Ordenar por:' value={query.sort} onChange={handleSortChange} className=" text-neutral-800 ">
         {sortOptions.map((option) => (
-          <option key={option} value={option}>
+          <SelectItem key={option} className='text-neutral-600' value={option}>
             {option.charAt(0).toUpperCase() + option.slice(1)} {/* Capitalizamos la opción */}
-          </option>
+          </SelectItem>
         ))}
-      </select>
+      </Select>
     </div>
   );
 };
