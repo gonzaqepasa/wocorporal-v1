@@ -26,13 +26,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(400).json({ error: 'Error al crear el ejercicio', msg: error.message });
             }
 
-        case 'GET': // Obtener todos los ejercicios
+        case 'GET': // Obtener un ejercicio específico o todos
             try {
-                const exercises = await Exercise.find();
-                return res.status(200).json(exercises);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+                const { id } = req.query;
+
+                if (id) {
+                    // Si hay un id en la query, buscar un solo ejercicio
+                    const exercise = await Exercise.findById(id);
+                    if (!exercise) {
+                        return res.status(404).json({ error: 'Ejercicio no encontrado' });
+                    }
+                    return res.status(200).json(exercise);
+                } else {
+                    // Si no hay id, devolver todos los ejercicios
+                    const exercises = await Exercise.find();
+                    return res.status(200).json(exercises);
+                }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                return res.status(500).json({ error: 'Error al obtener ejercicios' });
+                return res.status(500).json({ msg: 'Error al obtener ejercicios', error: error });
             }
 
         case 'PUT': // Actualizar un ejercicio por ID

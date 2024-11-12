@@ -1,4 +1,5 @@
 interface Exercise {
+    createdAt: string | number | Date;
     _id: string;
     name: string;
     description: string;
@@ -14,16 +15,17 @@ interface Exercise {
  * @param sortBy - Parámetro por el cual se ordenará ('name', 'difficulty', etc.).
  * @returns Array de ejercicios ordenados.
  */
-export const sortExercises = (exercises: Exercise[], sortBy: keyof Exercise): Exercise[] => {
+export const sortExercises = (exercises: Exercise[], sortBy: string) => {
     return exercises.sort((a, b) => {
-        const valueA = a[sortBy];
-        const valueB = b[sortBy];
-
-        if (typeof valueA === 'string' && typeof valueB === 'string') {
-            return valueA.localeCompare(valueB);
+        if (sortBy === "name") {
+            return a.name.localeCompare(b.name); // Ordenar por nombre
         }
-
-        // Manejar otros tipos de comparación si es necesario
+        if (sortBy === "difficulty") {
+            return a.difficulty - b.difficulty; // Ordenar por dificultad (número)
+        }
+        if (sortBy === "createdAt") {
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); // Ordenar por fecha de creación
+        }
         return 0;
     });
 };
