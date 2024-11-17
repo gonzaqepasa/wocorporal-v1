@@ -10,22 +10,14 @@ import { formatCreatedAt } from '@/utils/DateUtils';
 import ExerciseModal from '../ExerciseModal/ExerciseModal';
 import Link from 'next/link';
 import { MdEdit } from 'react-icons/md';
+import { TypesExercise } from '@/types/exercises';
 // import ExerciseSorter from './ExerciseSort';
 
 
-interface Exercise {
-    createdAt: Date;
-    _id: string;
-    name: string;
-    description: string;
-    muscles: string;
-    equipment: string;
-    difficulty: number;
-    videoUrl: string;
-}
+
 
 interface ExercisesPageProps {
-    exercises: Exercise[];
+    exercises: TypesExercise[];
     error: string | null;
 }
 
