@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await dbConnect()
             const { id } = req.query;
             const { exerciseId } = req.body;
-
+            // console.log("ENTRA ACA OASDAS->", id, exerciseId)
             const set = await Set.findById(id);
             if (!set) {
                 return res.status(404).json({ error: 'Set no encontrado' });

@@ -1,6 +1,5 @@
 import { capitalizeWords } from "@/utils/TextUtils";
 import { Modal, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
-import { MdPlayCircle } from "react-icons/md";
 import Difficulty from "../Difficult/DifficultyFires";
 
 interface Exercise {
@@ -25,8 +24,8 @@ const ExerciseModal: React.FC<Exercise> = ({ exercise }) => {
     return (
         <div>
             {/* Ícono de reproducción */}
-            <Button color="primary" variant="light" className="p-1 min-w-10" onPress={onOpen}>
-                <MdPlayCircle size={24} />
+            <Button color="primary" variant="light" className="p-1 px-2 min-w-10" onPress={onOpen}>
+                {exercise.name}
             </Button>
 
             {/* Modal de NextUI */}

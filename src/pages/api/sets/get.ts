@@ -1,6 +1,7 @@
 // pages/api/exercises.ts
 import dbConnect from '@/mongoose/db_mongo';
 import Set from '@/mongoose/models/Set';
+import '@/mongoose/models/Exercise';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 
@@ -12,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             if (id) {
                 // Si se proporciona un solo ID, busca ese set específico
-                const set = await Set.findById(id);
+                const set = await Set.findById(id).populate("exercises.exercise");
                 if (!set) {
                     return res.status(404).json({ error: 'Set no encontrado' });
                 }
@@ -20,11 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } else if (ids) {
                 // Si se proporciona un array de IDs, busca los sets correspondientes
                 const idsArray = Array.isArray(ids) ? ids : [ids];
-                const sets = await Set.find({ _id: { $in: idsArray } });
+                const sets = await Set.find({ _id: { $in: idsArray } }).populate("exercises.exercise");
                 return res.status(200).json(sets);
             } else {
                 // Si no se proporciona ningún ID, devuelve todos los sets
-                const sets = await Set.find();
+                const sets = await Set.find().populate("exercises.exercise")
                 return res.status(200).json(sets);
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

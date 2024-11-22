@@ -1,5 +1,6 @@
 export interface TypesExercise {
     createdAt: Date;
+    updatedAt: Date;
     _id: string;
     name: string;
     description: string;

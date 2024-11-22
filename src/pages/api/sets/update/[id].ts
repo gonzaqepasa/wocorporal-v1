@@ -8,13 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             await dbConnect();
             const { id } = req.query;
-            const { name, type, rounds } = req.body;
+            const { name, type, rounds,description } = req.body;
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const updates: any = {};
             if (name) updates.name = name;
             if (type) updates.type = type;
             if (rounds) updates.rounds = rounds;
+            if (description) updates.description = description;
 
             const updatedSet = await Set.findByIdAndUpdate(id, updates, { new: true });
             if (!updatedSet) {

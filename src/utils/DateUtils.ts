@@ -15,3 +15,20 @@ export const formatCreatedAt = (createdAt: string | Date): string => {
     // Usamos Intl.DateTimeFormat para formatear la fecha
     return new Intl.DateTimeFormat('es-ES', options).format(date);
 };
+ export const formatUpdatedAt = (updatedAt: string | Date): string => {
+    // Asegúrate de que `updatedAt` sea un objeto de fecha
+    const date = typeof updatedAt === "string" ? new Date(updatedAt) : updatedAt;
+
+    // Opciones de formato para mostrar día y hora
+    const options: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // Muestra la hora en formato 24h
+    };
+
+    // Usamos Intl.DateTimeFormat para formatear la fecha
+    return new Intl.DateTimeFormat('es-ES', options).format(date);
+};
