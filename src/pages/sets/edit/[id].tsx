@@ -30,8 +30,8 @@ const EditSetPage = ({ set, error }: { set: TypesSet; error: string | null }) =>
     return <p className="text-gray-500 text-center">No se pudo encontrar el set.</p>;
   }
 
-  return <main className="min-h-screen flex flex-col items-center">
-    <EditSetForm set={set} />;
+  return <main className="min-h-screen flex flex-col items-center gap-2 p-6">
+    <EditSetForm set={set} />
 
   </main>
 };

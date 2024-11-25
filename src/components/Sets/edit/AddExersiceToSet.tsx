@@ -5,6 +5,10 @@ import { GrAdd } from "react-icons/gr";
 import { capitalizeWords } from "@/utils/TextUtils";
 import Difficulty from "@/components/Difficult/DifficultyFires";
 import { formatUpdatedAt } from "@/utils/DateUtils";
+import { showErrorAlert, showSuccessAlert } from "@/utils/SweetAlertUtils";
+import { useRouter } from "next/router";
+
+
 
 
 
@@ -21,6 +25,7 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
         rest: 0,
         duration: 0
     });
+    const router = useRouter()
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     // Cargar ejercicios desde la base de datos
     useEffect(() => {
@@ -58,7 +63,6 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleAddExercise = async ({ exerciseId, reps, duration, rest }: { exerciseId: string, reps: number, duration: number, rest: number }) => {
         if (selectedExercise) {
-
             try {
                 const response = await fetch(`/api/sets/add-exercise/${setId}`, {
                     method: "PUT",
@@ -68,11 +72,12 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
 
                 if (!response.ok) throw new Error("Error al actualizar el set");
 
-                // Redirigir o mostrar un mensaje de éxito
-                alert("Set actualizado correctamente");
+
+                showSuccessAlert("Se agrego el ejercicio con exito")
+                router.reload()
             } catch (error) {
                 console.error(error);
-                alert("Error al actualizar el set");
+                showErrorAlert("Error al actualizar el set")
             }
 
         }
@@ -80,7 +85,7 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
 
     return (
         <>
-            <Button onPress={onOpen}>Open Modal</Button>
+            <Button onPress={onOpen} variant="light" color="primary">Agregar ejercicio al set</Button>
             <Modal isOpen={isOpen} className="dark" onOpenChange={onOpenChange}>
                 <ModalContent>
                     {onClose => (
@@ -154,7 +159,7 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
                                 <Button color="danger" variant="light" onClick={onClose}>
                                     Cancelar
                                 </Button>
-                                <Button onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?._id), duration: configExercise.duration, reps: configExercise.reps, rest: configExercise.rest })} color="primary" disabled={!selectedExercise}>
+                                <Button isDisabled={!selectedExercise?._id || !configExercise.reps && !configExercise.duration} onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?._id), duration: configExercise.duration, reps: configExercise.reps, rest: configExercise.rest })} color="primary" disabled={!selectedExercise}>
                                     Agregar
                                 </Button>
                             </ModalFooter>

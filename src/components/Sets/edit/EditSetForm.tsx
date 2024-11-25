@@ -4,6 +4,8 @@ import { TypesSet } from "@/types/sets";
 import { useRouter } from "next/router";
 import AddExerciseToSet from "./AddExersiceToSet";
 import { BiSave } from "react-icons/bi";
+import { FaDeleteLeft } from "react-icons/fa6";
+import ExerciseModal from "@/components/ExerciseModal/ExerciseModal";
 
 
 
@@ -62,7 +64,7 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
 
     return (
         <>
-            <div className="p-4 flex flex-col items-center max-w-md dark">
+            <div className="p-4 flex flex-col items-center max-w-lg w-full bg-neutral-900 rounded-lg shadow dark">
                 <h2 className="text-2xl font-bold mb-4">Editar Set</h2>
                 <div className="flex flex-wrap gap-2 max-w-md">
                     <Button className=" w-min  min-w-0 " variant="light" onClick={handleSubmit} isDisabled={set.name === name && set.description === description && set.rounds === rounds} color="primary" fullWidth>
@@ -70,6 +72,7 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
                         {/* <p>Guardar</p> */}
                     </Button>
                     <Input
+                        color="primary"
                         variant="faded"
                         className=" w-20"
                         label="Rondas"
@@ -79,6 +82,7 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
                         fullWidth
                     />
                     <Input
+                        color="primary"
                         variant="faded"
                         className=" w-64"
                         label="Nombre del Set"
@@ -87,6 +91,7 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
                         fullWidth
                     />
                     <Textarea
+                        color="primary"
                         variant="faded"
                         label="Descripción"
                         value={description}
@@ -99,47 +104,54 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
             </div>
 
             {/* RENDER EXERCISES FROM SET */}
-            <div className="max-w-md">
-                <Table className="dark">
+            <div className="max-w-lg w-full flex flex-col bg-neutral-900 rounded-lg shadow dark">
+                <Table className="dark" shadow="none" removeWrapper >
                     <TableHeader>
-                        <TableColumn>CONFIGURACIÓN</TableColumn>
+                        <TableColumn>REST/DUR/REPS</TableColumn>
                         <TableColumn>EJERCICIO</TableColumn>
                         <TableColumn>OPCIONES</TableColumn>
                     </TableHeader>
                     <TableBody>
 
+
                         {set.exercises.map((e, i) => (
                             <TableRow key={i}>
-                                <TableCell className="flex gap-1 items-center">
-                                    {e.duration && <div className=" rounded text-primary-400">
-                                        <p>{`${e.duration} seg`}</p>
-                                    </div >}
-                                    {e.reps && <div className=" rounded text-primary-400">
-                                        <p>{`${e.reps} reps`}</p>
+                                <TableCell >
+                                    <div className="flex gap-1 items-center">
+
+                                        <div className={`${!e.rest && "opacity-30"} rounded text-primary-900 bg-black px-1`}>
+                                            <p>{`${e.rest}''`}</p>
+                                        </div>
+
+                                        <div className={`${!e.duration && "opacity-30"} rounded text-primary-600 bg-black px-1`}>
+                                            <p className="text-lg">{`${e.duration}''`}</p>
+                                        </div >
+                                        <div className={`${!e.reps && "opacity-30"} rounded text-primary-400 bg-black px-1`}>
+                                            <p className="text-lg">{`${e.reps}x `}</p>
+                                        </div>
+
                                     </div>
-                                    }
-                                    {e.rest && <div className=" rounded text-primary-600">
-                                        <p>{`${e.rest} seg`}</p>
-                                    </div>
-                                    }
 
                                 </TableCell>
                                 <TableCell>
-                                    <p>{e.exercise.name}</p>
+                                    {/* <p>{capitalizeWords(e.exercise.name)}</p> */}
+                                    <ExerciseModal exercise={e.exercise}/>
                                 </TableCell>
                                 <TableCell>
-                                    <Button onPress={() => handleRemoveExercise(e.exercise._id)}>
-                                        DELETE
+                                    <Button variant="light" color="danger" className={`min-w-0`} onPress={() => handleRemoveExercise(e.exercise._id)}>
+                                        <FaDeleteLeft />
                                     </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
+
                     </TableBody>
                 </Table >
-            </div>
-            <div>
                 <AddExerciseToSet setId={set._id} />
+
             </div>
+
+
         </>
     );
 };

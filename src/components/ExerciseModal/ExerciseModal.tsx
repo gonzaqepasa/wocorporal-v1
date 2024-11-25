@@ -24,12 +24,12 @@ const ExerciseModal: React.FC<Exercise> = ({ exercise }) => {
     return (
         <div>
             {/* Ícono de reproducción */}
-            <Button color="primary" variant="light" className="p-1 px-2 min-w-10" onPress={onOpen}>
-                {exercise.name}
+            <Button color="primary" variant="light" className="p-1 px-3 text-neutral-200 min-w-10" onPress={onOpen}>
+                {capitalizeWords(exercise.name)}
             </Button>
 
             {/* Modal de NextUI */}
-            <Modal isOpen={isOpen} placement="center" onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} placement="center" className="dark" onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -37,7 +37,7 @@ const ExerciseModal: React.FC<Exercise> = ({ exercise }) => {
                             <ModalHeader>
                                 <div className="flex flex-col">
 
-                                    <h2 className="text-lg text-neutral-900 font-bold">
+                                    <h2 className="text-lg  font-bold">
                                         {capitalizeWords(exercise.name)}
                                     </h2>
                                     <Difficulty size={15} difficulty={exercise.difficulty} />
