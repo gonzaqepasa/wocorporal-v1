@@ -6,6 +6,9 @@ const ExerciseSchema = new Schema(
       type: String,
       required: [true, "El nombre es obligatorio"],
     },
+    sets: [
+      { type: Schema.Types.ObjectId, ref: 'Set' },  // Referencia al ejercicio
+    ],
     description: { type: String, },
     muscle: { type: String, },
     equipment: { type: String },

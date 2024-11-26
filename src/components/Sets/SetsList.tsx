@@ -33,16 +33,16 @@ const SetsList: React.FC<ExercisesPageProps> = ({ sets, error }) => {
         <>
             <div>
             </div>
-            <Table className=" max-w-lg w-[95vw] overflow-auto " aria-label='none' >
+            <Table className=" max-w-lg w-[95vw] overflow-auto dark" aria-label='none' >
                 <TableHeader>
                     <TableColumn>NOMBRE</TableColumn>
-                    <TableColumn>N</TableColumn>
+                    <TableColumn>N° Ej</TableColumn>
                     <TableColumn>TIPO</TableColumn>
                     <TableColumn>OPCIONES</TableColumn>
                 </TableHeader>
                 <TableBody >
                     {sets.map((set) => (
-                        <TableRow className='text-neutral-800 ' key={set._id}>
+                        <TableRow className=' ' key={set._id}>
                             <TableCell className="text-sm text-nowrap">
                                 <p>{capitalizeWords(set.name)}</p>
                             </TableCell>

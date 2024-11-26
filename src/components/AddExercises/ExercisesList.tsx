@@ -37,7 +37,7 @@ const ExerciseList: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
         <div className="">
             <ExerciseSorter sortOptions={["name", "difficulty", "createdAt"]} />
             <h2 className="text-xl font-bold ">Listado de Ejercicios</h2>
-            <Table className=" max-w-lg w-[95vw] overflow-auto " aria-label='none' >
+            <Table className=" max-w-lg w-[95vw] overflow-auto dark " aria-label='none' >
                 <TableHeader>
                     <TableColumn>NOMBRE</TableColumn>
                     <TableColumn>DIFICULTAD</TableColumn>
@@ -45,7 +45,7 @@ const ExerciseList: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
                 </TableHeader>
                 <TableBody >
                     {exercises.map((exercise) => (
-                        <TableRow className='text-neutral-800 p-0' key={exercise._id}>
+                        <TableRow className=' p-0' key={exercise._id}>
                             <TableCell className="text-sm text-nowrap">
                                 <p>
                                     {capitalizeWords(exercise.name)}

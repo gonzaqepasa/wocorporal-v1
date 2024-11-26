@@ -6,6 +6,7 @@ import AddExerciseToSet from "./AddExersiceToSet";
 import { BiSave } from "react-icons/bi";
 import { FaDeleteLeft } from "react-icons/fa6";
 import ExerciseModal from "@/components/ExerciseModal/ExerciseModal";
+import DeleteSet from "../delete/DeleteSet";
 
 
 
@@ -135,7 +136,7 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
                                 </TableCell>
                                 <TableCell>
                                     {/* <p>{capitalizeWords(e.exercise.name)}</p> */}
-                                    <ExerciseModal exercise={e.exercise}/>
+                                    <ExerciseModal exercise={e.exercise} />
                                 </TableCell>
                                 <TableCell>
                                     <Button variant="light" color="danger" className={`min-w-0`} onPress={() => handleRemoveExercise(e.exercise._id)}>
@@ -148,7 +149,9 @@ const EditSetForm: React.FC<EditSetFormProps> = ({ set }) => {
                     </TableBody>
                 </Table >
                 <AddExerciseToSet setId={set._id} />
-
+                <div>
+                    <DeleteSet set={set} onDeleteSuccess={() => router.push(`/sets`)} />
+                </div>
             </div>
 
 
