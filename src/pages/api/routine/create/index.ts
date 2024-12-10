@@ -6,11 +6,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-            const { name, description } = req.body;
+            const { name, description, level } = req.body;
             if (!name) res.status(202).json({ msg: "Debe ingresar un nombre." })
 
             await dbConnect();
-            const routine = await Routine.create({ name, description, days: [] });
+            const routine = await Routine.create({ name, description, sets: [], level });
             res.status(201).json(routine);
         } catch (error) {
             console.error(error);
