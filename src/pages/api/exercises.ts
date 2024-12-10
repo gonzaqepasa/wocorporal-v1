@@ -1,16 +1,10 @@
 // pages/api/exercises.ts
 import dbConnect from '@/mongoose/db_mongo';
 import Exercise from '@/mongoose/models/Exercise';
+import { TypesExercise } from '@/types/exercises';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-interface ExerciseData {
-    name: string;
-    description?: string;
-    muscles?: string[];
-    equipment?: string;
-    difficulty?: 'beginner' | 'intermediate' | 'advanced';
-    videoUrl?: string;
-}
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     await dbConnect();
@@ -18,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
         case 'POST': // Crear un nuevo ejercicio
             try {
-                const exercise = new Exercise(req.body as ExerciseData);
+                const exercise = new Exercise(req.body as TypesExercise);
                 await exercise.save();
                 return res.status(201).json(exercise);
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'PUT': // Actualizar un ejercicio por ID
             try {
                 const { id } = req.query;
-                const exercise = await Exercise.findByIdAndUpdate(id, req.body as ExerciseData, { new: true });
+                const exercise = await Exercise.findByIdAndUpdate(id, req.body as TypesExercise, { new: true });
                 if (!exercise) return res.status(404).json({ error: 'Ejercicio no encontrado' });
                 return res.status(200).json(exercise);
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
