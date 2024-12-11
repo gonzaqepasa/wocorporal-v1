@@ -1,6 +1,8 @@
 import dbConnect from "@/mongoose/db_mongo";
 import Routine from "@/mongoose/models/Routine";
 import type { NextApiRequest, NextApiResponse } from "next";
+import '@/mongoose/models/Set'
+import '@/mongoose/models/Exercise'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
@@ -9,7 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             await dbConnect();
 
-            const routines = await Routine.findById(id);
+            const routines = await Routine.findById(id).populate({
+                path: "sets",
+                populate: {
+                    path: "exercises.exercise", // Aquí se especifica la relación dentro de "sets"
+                },
+            });
             res.status(200).json(routines);
         } catch (error) {
             console.error(error);

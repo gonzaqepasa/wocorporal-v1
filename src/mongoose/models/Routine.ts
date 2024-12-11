@@ -8,7 +8,8 @@ const RoutineSchema = new Schema(
     sets: [{ type: Schema.Types.ObjectId, ref: 'Set' }],  // Conjunto de sets para este día
 
     durationWeeks: Number,                                // Duración en semanas (opcional)
-    level: { type: Number, enum: [1, 2, 3, 4, 5] }  // Nivel de la rutina
+    level: { type: Number, enum: [1, 2, 3, 4, 5] }, // Nivel de la rutina
+    videoUrl: { type: String }
   },
   {
     timestamps: { updatedAt: true, createdAt: true },

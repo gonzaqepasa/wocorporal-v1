@@ -1,11 +1,13 @@
 import ErrorPageMain from "@/components/Globals/pages/ErrorPages";
+import AddSetToRoutine from "@/components/Routine/Edit/AddSetToRoutine";
 import { url } from "@/config/env_d";
+import { TypesRoutine } from "@/types/routine";
 // import SetsList from "@/components/Sets/SetsList";
 // import { Button } from "@nextui-org/react";
 // import { useState } from "react";
 import { GetServerSideProps } from "next";
 interface RoutineListPageProps {
-    rutina: [];
+    rutina: TypesRoutine;
     error: string | null;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,7 +58,7 @@ const EditRoutinePage: React.FC<RoutineListPageProps> = ({ rutina, error }) => {
     </ErrorPageMain>
     return (<>
         <main className="min-h-screen flex flex-col items-center" >
-
+            <AddSetToRoutine rutina={rutina} />
 
         </main>
     </>);
