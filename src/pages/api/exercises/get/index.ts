@@ -1,0 +1,58 @@
+// pages/api/exercises.ts
+import exerciseService from '@/services_app/Exercises/Exercises';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    switch (req.method) {
+
+
+        case 'GET': // Obtener un ejercicio específico o todos
+            try {
+                const { id } = req.query;
+
+                if (id) {
+                    // Si hay un id en la query, buscar un solo ejercicio
+                    const exercise = await exerciseService.getExerciseById(id.toString());
+                    if (!exercise) {
+                        return res.status(404).json({ error: 'Ejercicio no encontrado' });
+                    }
+                    return res.status(200).json(exercise);
+                } else {
+                    // Si no hay id, devolver todos los ejercicios
+                    const exercises = await exerciseService.getAllExercises();
+                    return res.status(200).json(exercises);
+                }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
+                return res.status(500).json({ msg: 'Error al obtener ejercicios', error: error });
+            }
+
+        // case 'PUT': // Actualizar un ejercicio por ID
+        //     try {
+        //         const { id } = req.query;
+        //         const exercise = await Exercise.findByIdAndUpdate(id, req.body as TypesExercise, { new: true });
+        //         if (!exercise) return res.status(404).json({ error: 'Ejercicio no encontrado' });
+        //         return res.status(200).json(exercise);
+        //         // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+        //     } catch (error: any) {
+        //         return res.status(400).json({ error: 'Error al actualizar ejercicio' });
+        //     }
+
+        // case 'DELETE': // Eliminar un ejercicio por ID
+        //     try {
+        //         const { id } = req.query;
+        //         const exercise = await Exercise.findByIdAndDelete(id);
+        //         if (!exercise) return res.status(404).json({ error: 'Ejercicio no encontrado' });
+        //         return res.status(200).json({ message: 'Ejercicio eliminado' });
+        //         // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+        //     } catch (error: any) {
+        //         return res.status(400).json({ error: 'Error al eliminar ejercicio' });
+        //     }
+
+        default:
+            return res.status(405).json({ error: 'Método no permitido' });
+    }
+}

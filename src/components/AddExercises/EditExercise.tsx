@@ -31,7 +31,7 @@ const EditExercise: React.FC<EditExerciseFormProps> = ({ exercise, onSuccess }) 
         e.preventDefault();
     
         try {
-          const response = await fetch(`/api/exercises?id=${formData._id}`, {
+          const response = await fetch(`/api/exercises/update?id=${formData._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),

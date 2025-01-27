@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.query;
 
     try {
-        const response = await fetch(`${url}/api/exercises?id=${id}`);
+        const response = await fetch(`${url}/api/exercises/get?id=${id}`);
         if (!response.ok) {
             throw new Error("Error al cargar el ejercicio");
         }
@@ -53,7 +53,7 @@ const ExercisesEditPage: React.FC<PageProps> = ({ exercise, error }) => {
     return (<>
         <main className="min-h-screen flex flex-col items-center">
             <NavBarExercises />
-            <EditExercise exercise={exercise} onSuccess={() => router.push("/exercises")} />
+            <EditExercise exercise={exercise} onSuccess={() => router.push("/trainer/exercises")} />
         </main>
     </>);
 }

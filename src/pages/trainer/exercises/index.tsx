@@ -3,21 +3,12 @@ import ExerciseList from "@/components/AddExercises/ExercisesList";
 import NavBarExercises from "@/components/Navs/NavExercises";
 import { url } from "@/config/env_d";
 import { sortExercises } from "@/logic/order/orderlist";
+import { TypesExercise } from "@/types/exercises";
 
-interface Exercise {
-  createdAt: Date;
 
-  _id: string;
-  name: string;
-  description: string;
-  muscles: string;
-  equipment: string;
-  difficulty: number;
-  videoUrl: string;
-}
 
 interface ExerciseListPageProps {
-  exercises: Exercise[];
+  exercises: TypesExercise[];
   error: string | null;
 }
 
@@ -26,7 +17,7 @@ export const getServerSideProps = async ({ query }: any) => {
   const { sort = "name" } = query; // Si no se pasa un parámetro 'sort', usamos "name" por defecto
 
   try {
-    const response = await fetch(`${url}/api/exercises`);
+    const response = await fetch(`${url}/api/exercises/get`);
     if (!response.ok) {
       throw new Error('Error al cargar los ejercicios');
     }
