@@ -1,5 +1,5 @@
 import EditExercise from "@/components/AddExercises/EditExercise";
-import NavBarExercises from "@/components/Navs/NavExercises";
+import NavBarExercises from "@/components/Navs/NavAdmin";
 import { url } from "@/config/env_d";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";

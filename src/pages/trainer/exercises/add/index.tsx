@@ -1,5 +1,5 @@
 import ExerciseForm from "@/components/AddExercises/FormAddExercises";
-import NavBarExercises from "@/components/Navs/NavExercises";
+import NavBarExercises from "@/components/Navs/NavAdmin";
 
 
 const ExercisesAddPage = () => {
