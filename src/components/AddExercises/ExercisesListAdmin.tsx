@@ -24,7 +24,7 @@ interface ExercisesPageProps {
 
 
 
-const ExerciseList: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
+const ExerciseListAdmin: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
     if (error) {
         return <p className="text-center text-red-500">{error}</p>;
     }
@@ -72,4 +72,4 @@ const ExerciseList: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
     );
 };
 
-export default ExerciseList;
+export default ExerciseListAdmin;

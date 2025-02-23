@@ -1,5 +1,6 @@
 import { useAuth } from "@/pages/_AuthProvider";
-import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Divider, Image } from "@nextui-org/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaDumbbell, FaLayerGroup, FaUsers } from "react-icons/fa";
 
@@ -14,6 +15,7 @@ interface AdminStats {
         totalRoutines: number;
         totalSets: number;
         totalUsers: number;
+        totalExercises: number;
     };
 }
 
@@ -46,9 +48,9 @@ export default function PanelMainAdmin() {
     if (error) return <div>{error}</div>;
 
     return (
-        <div className="p-6">
-            <h1 className="text-xl font-bold mb-4">Panel de Administración</h1>
-            <Card className="max-w-[400px]">
+        <div className=" w-full flex items-center justify-center flex-col gap-4">
+
+            <Card className="max-w-2xl w-full rounded-none">
                 <CardHeader className="flex gap-3 shadow-lg items-center">
                     <Image
                         alt="Admin Profile"
@@ -57,11 +59,11 @@ export default function PanelMainAdmin() {
                         width={80}
                         src={user?.image}
                     />
-                    <div>
-                        <h2 className="font-semibold">Información del Administrador</h2>
-                        <p className="text-sm"><strong>Nombre:</strong> {data?.profile.name}</p>
-                        <p className="text-sm"><strong>Email:</strong> {data?.profile.email}</p>
-                        <p className="text-sm"><strong >Rol:</strong> {data?.profile.role.toUpperCase()}</p>
+                    <div className="flex flex-col gap-1">
+                        <h2 className="font-semibold text-lg text-neutral-500">Información del Administrador</h2>
+                        <p className="text-sm"><strong className="italic text-neutral-900">Nombre:</strong> {data?.profile.name}</p>
+                        <p className="text-sm"><strong className="italic text-neutral-900">Email:</strong> {data?.profile.email}</p>
+                        <p className="text-sm"><strong className="italic text-neutral-900" >Rol:</strong> {data?.profile.role.toUpperCase()}</p>
                     </div>
                 </CardHeader>
                 <Divider />
@@ -81,9 +83,19 @@ export default function PanelMainAdmin() {
                         <p className="italic">Usuarios:</p>
                         <p className="font-medium">{data?.metrics.totalUsers}</p>
                     </div>
+                    <div className="flex items-center gap-4 shadow p-2 rounded-lg ">
+                        <FaDumbbell className="text-yellow-500 text-xl" />
+                        <p className="italic">Ejercicios:</p>
+                        <p className="font-medium">{data?.metrics.totalExercises}</p>
+                        <Button size="sm" variant="light" color="primary">
+                            <Link href="/admin/exercises">
+                                Ver Ejercicios
+                            </Link>
+                        </Button>
+                    </div>
                 </CardBody>
-                <Divider />
-                <CardFooter></CardFooter>
+                {/* <Divider />
+                <CardFooter></CardFooter> */}
             </Card>
         </div>
     );

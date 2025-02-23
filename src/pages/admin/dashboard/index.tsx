@@ -1,12 +1,15 @@
 import PanelMainAdmin from "@/components/dashboard/admin/PanelMainAdmin";
 import NavAdmin from "@/components/Navs/NavAdmin";
+import ProtectedRoute from "@/pages/_ProtectedRoute";
 
 const AdminDashboardPage = () => {
     return (<>
-        <NavAdmin />
-        <main className="min-h-screen flex flex-col items-center">
-            <PanelMainAdmin />
-        </main>
+        <ProtectedRoute allowedRoles={['admin']}>
+            <NavAdmin />
+            <main className="min-h-screen flex flex-col items-center">
+                <PanelMainAdmin />
+            </main>
+        </ProtectedRoute>
     </>);
 }
 
