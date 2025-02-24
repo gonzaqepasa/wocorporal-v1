@@ -89,7 +89,7 @@ const EditExercise: React.FC<EditExerciseFormProps> = ({ exercise, onSuccess }) 
                     onChange={handleInputChange}
                  
                 />
-                <Input
+                {/* <Input
                     label="Dificultad (1-5)"
                     type="number"
                     name="difficulty"
@@ -98,7 +98,7 @@ const EditExercise: React.FC<EditExerciseFormProps> = ({ exercise, onSuccess }) 
                     min={1}
                     max={5}
                    
-                />
+                /> */}
                 <Input
                     label="URL del Video"
                     name="videoUrl"

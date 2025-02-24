@@ -42,7 +42,7 @@ export const getServerSideProps = async ({ query }: any) => {
 const ExerciseListPage: React.FC<ExerciseListPageProps> = ({ exercises, error }) => {
   return (
     <>
-      <main className="min-h-screen flex flex-col items-center">
+      <main className="min-h-screen flex flex-col items-center background-admin">
         <NavBarExercises />
         <ProtectedRoute allowedRoles={["admin"]}>
           <h1 className="text-3xl font-bold my-8">Lista de Ejercicios</h1>

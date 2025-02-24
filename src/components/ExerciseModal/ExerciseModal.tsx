@@ -1,10 +1,12 @@
 import { capitalizeWords } from "@/utils/TextUtils";
 import { Modal, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
 import Difficulty from "../Difficult/DifficultyFires";
+import { MdPlayArrow } from "react-icons/md";
 
 interface Exercise {
     exercise: {
         createdAt: Date;
+        updatedAt: Date;
         _id: string;
         name: string;
         description: string;
@@ -13,9 +15,13 @@ interface Exercise {
         difficulty: number;
         videoUrl: string;
     }
+    config?: {
+        size?: number
+        icon?: boolean
+    }
 }
 
-const ExerciseModal: React.FC<Exercise> = ({ exercise }) => {
+const ExerciseModal: React.FC<Exercise> = ({ exercise, config }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 
@@ -24,8 +30,12 @@ const ExerciseModal: React.FC<Exercise> = ({ exercise }) => {
     return (
         <div>
             {/* Ícono de reproducción */}
-            <Button color="primary" variant="light" className="p-1 px-3 text-neutral-200 min-w-10" onPress={onOpen}>
-                {capitalizeWords(exercise.name)}
+            <Button color="primary" variant="light" className="flex items-center gap-0    min-w-10" onPress={onOpen}>
+                {config?.icon && <MdPlayArrow />}
+                <p>
+                    {capitalizeWords(exercise.name)}
+                </p>
+
             </Button>
 
             {/* Modal de NextUI */}

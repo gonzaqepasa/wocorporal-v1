@@ -19,14 +19,14 @@ interface PageProps {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.query;
-
+    // console.log("ESTE ES EL ID", id);
     try {
-        const response = await fetch(`${url}/api/exercises/get?id=${id}`);
+        const response = await fetch(`${url}/exercise/${id}`);
         if (!response.ok) {
             throw new Error("Error al cargar el ejercicio");
         }
         const exercise = await response.json();
-
+        console.log("ESTE ES EL EJERCICIO", exercise);
         return {
             props: { exercise, error: null },
         };
@@ -53,7 +53,7 @@ const ExercisesEditPage: React.FC<PageProps> = ({ exercise, error }) => {
     return (<>
         <main className="min-h-screen flex flex-col items-center">
             <NavBarExercises />
-            <EditExercise exercise={exercise} onSuccess={() => router.push("/trainer/exercises")} />
+            <EditExercise exercise={exercise} onSuccess={() => router.push("/admin/exercises")} />
         </main>
     </>);
 }

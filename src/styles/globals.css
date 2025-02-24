@@ -19,3 +19,13 @@ body {
   background: var(--background);
   font-family: "Roboto", sans-serif;
 }
+
+
+
+.background-admin {
+  background-image: url("./139.svg");
+  
+   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

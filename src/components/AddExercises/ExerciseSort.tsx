@@ -4,9 +4,10 @@ import React from 'react';
 
 interface ExerciseSorterProps {
   sortOptions: string[]; // Opciones de ordenación, por ejemplo, ["name", "difficulty", "muscles"]
+  pathname: string;
 }
 
-const ExerciseSorter: React.FC<ExerciseSorterProps> = ({ sortOptions }) => {
+const ExerciseSorter: React.FC<ExerciseSorterProps> = ({ sortOptions, pathname }) => {
   const router = useRouter();
   const { query } = router;
 
@@ -16,14 +17,14 @@ const ExerciseSorter: React.FC<ExerciseSorterProps> = ({ sortOptions }) => {
 
     // Actualizamos la URL con la nueva query de orden
     router.push({
-      pathname: '/exercises',
+      pathname,
       query: { ...query, sort: selectedSort }, // Añade o actualiza el parámetro de orden
     });
   };
 
   return (
     <div className="mb-4">
-     
+
       <Select id="sort" variant='flat' color='primary' label='Ordenar por:' value={query.sort} onChange={handleSortChange} className=" text-neutral-800 ">
         {sortOptions.map((option) => (
           <SelectItem key={option} className='text-neutral-600' value={option}>
