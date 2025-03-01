@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { MdEdit } from 'react-icons/md';
 import { TypesExercise } from '@/types/exercises';
 // import ExerciseSorter from './ExerciseSort';
+import { useAuth } from '@/pages/_AuthProvider';
 
 
 
@@ -23,6 +24,7 @@ interface ExercisesPageProps {
 
 
 const ExerciseListAdmin: React.FC<ExercisesPageProps> = ({ exercises, error }) => {
+    const { user } = useAuth();
     if (error) {
         return <p className="text-center text-red-500">{error}</p>;
     }
@@ -53,7 +55,7 @@ const ExerciseListAdmin: React.FC<ExercisesPageProps> = ({ exercises, error }) =
                             <TableCell className='p-0 flex'>
                                 <BtnDeleteExercise id={exercise._id} onDeleteSuccess={() => { }} />
                                 <Button className='min-w-4' variant='light'>
-                                    <Link href={`/admin/exercises/edit?id=${exercise._id}`}>
+                                    <Link href={`/admin/exercises/edit?id=${exercise._id}&apiKey=${user?.apiKey}`}>
                                         <MdEdit />
                                     </Link>
                                 </Button>

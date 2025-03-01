@@ -21,19 +21,19 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     } else if (user && !allowedRoles.includes(user.role)) {
       router.push("/unauthorized");
     } else {
-      setIsLoading(true);
+      setIsLoading(false);
     }
 
   }, [user, isAuthenticated, router, allowedRoles]);
 
 
 
-
-  if (!isAuthenticated) {
-    return <div className="flex justify-center items-center h-screen">No estas logueado</div>;
-  }
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">Cargando...</div>;
   }
-  return <>{children}</>;
+
+  if (isAuthenticated || user) return <>{children}</>;
+
+  return <div className="flex justify-center items-center h-screen">No estas logueado</div>;
+
 }
