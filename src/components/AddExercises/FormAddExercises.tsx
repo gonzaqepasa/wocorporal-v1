@@ -1,4 +1,6 @@
 // components/ExerciseForm.tsx
+import { url } from '@/config/env_d';
+import { useAuth } from '@/pages/_AuthProvider';
 import { showErrorAlert, showSuccessAlert } from '@/utils/SweetAlertUtils';
 import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react';
 import React, { useState } from 'react';
@@ -16,6 +18,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
         difficulty: 0,
         videoUrl: '',
     });
+    const { user } = useAuth()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -28,10 +31,12 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({ onSuccess }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/exercises/create', {
+            const response = await fetch(`${url}/exercise/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user?.token}`
+
                 },
                 body: JSON.stringify({
                     name: formData.name,
