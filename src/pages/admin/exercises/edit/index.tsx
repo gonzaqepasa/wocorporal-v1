@@ -1,8 +1,7 @@
 import EditExercise from "@/components/AddExercises/EditExercise";
-import NavBarExercises from "@/components/Navs/NavExercises";
+import NavBarExercises from "@/components/Navs/NavAdmin";
 import { url } from "@/config/env_d";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 interface Exercise {
     _id: string;
     name: string;
@@ -18,15 +17,15 @@ interface PageProps {
     error: string | null;
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { id } = context.query;
-
+    const { id,apiKey } = context.query;
+    // console.log("ESTE ES EL ID", id);
     try {
-        const response = await fetch(`${url}/api/exercises/get?id=${id}`);
+        const response = await fetch(`${url}/exercise/${id}?apiKey=${apiKey}`);
         if (!response.ok) {
             throw new Error("Error al cargar el ejercicio");
         }
         const exercise = await response.json();
-
+        console.log("ESTE ES EL EJERCICIO", exercise);
         return {
             props: { exercise, error: null },
         };
@@ -39,7 +38,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 const ExercisesEditPage: React.FC<PageProps> = ({ exercise, error }) => {
 
-    const router = useRouter();
 
     if (error) {
         return <p className="text-center text-red-500">{error}</p>;
@@ -53,7 +51,7 @@ const ExercisesEditPage: React.FC<PageProps> = ({ exercise, error }) => {
     return (<>
         <main className="min-h-screen flex flex-col items-center">
             <NavBarExercises />
-            <EditExercise exercise={exercise} onSuccess={() => router.push("/trainer/exercises")} />
+            <EditExercise exercise={exercise}  />
         </main>
     </>);
 }

@@ -1,8 +1,6 @@
 // URL para conectar con la api
 export const url =
-  process.env.NEXT_PUBLIC_DOMAIN_BACK || "http://localhost:3000/api";
+  process.env.NEXT_PUBLIC_DOMAIN_BACK || "http://localhost:3002/api";
 
-// Url para conectar con mongoose
-export const URL_MONGODB =
-  process.env.NEXT_PUBLIC_URL_MONGODB ||
-  `mongodb://127.0.0.1:27017/${"wocorporal-v1-test"}`;
+
+export const GOOGLE_AUTH_URL = process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL || "http://localhost:3002/api/auth/google/callback";
