@@ -1,10 +1,11 @@
 import MyUserCard from "@/components/Globals/Perfil/MyUserCard";
 import { url } from "@/config/env_d";
 import { useAuth } from "@/pages/_AuthProvider";
-import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { FcBarChart } from "react-icons/fc";
+import { FcAdvance, FcBarChart } from "react-icons/fc";
 import TrainerMetricList from "./Metrics/MetricsList";
+import Link from "next/link";
 
 interface typesTrainingDashboard {
     profile: {
@@ -69,7 +70,13 @@ const PanelTrainerMain = () => {
 
                 </CardHeader>
                 <CardBody>
+                    <div className="flex items-center gap-2">
+                        <FcBarChart size={20} />
+                        <h3 className="text-xl font-bold ">Metricas</h3>
+                    </div>
+                    <Divider />
 
+                    <TrainerMetricList metrics={data.metrics} />
                 </CardBody>
 
             </Card>
@@ -77,13 +84,23 @@ const PanelTrainerMain = () => {
 
                 <CardHeader>
                     <div className="flex items-center gap-2">
-                        <FcBarChart size={20} />
-                        <h3 className="text-xl font-bold ">Metricas</h3>
+                        <FcAdvance size={20} />
+                        <h3 className="text-xl font-bold ">Acciones</h3>
                     </div>
                 </CardHeader>
-                <Divider />
-                <CardBody className="">
-                    <TrainerMetricList metrics={data.metrics} />
+                <CardBody className=" ">
+                    <div className="flex flex-col gap-2 items-start">
+
+                        <Button color="primary" variant="light" className="justify-start">
+                            <Link href={`/trainer/sets?apiKey=${user?.apiKey}`} >Panel de Sets</Link>
+                        </Button>
+                        <Button color="primary" variant="light" className="justify-start">
+                            <Link href={``} >Panel de Rutinas</Link>
+                        </Button>
+                        <Button color="primary" variant="light" className="justify-start">
+                            <Link href={``} >Panel de usuarios</Link>
+                        </Button>
+                    </div>
                 </CardBody>
 
 
@@ -91,7 +108,16 @@ const PanelTrainerMain = () => {
 
 
             </Card >
-            <div className="gmt-3 bg-blue-600">3</div>
+            <Card radius="none" className="gmt-3 ">
+
+                <CardHeader>
+                </CardHeader>
+
+                <CardBody className="">
+
+                </CardBody>
+
+            </Card>
 
         </div >
 

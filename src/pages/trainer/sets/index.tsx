@@ -14,7 +14,7 @@ interface SetsListPageProps {
 export const getServerSideProps = async ({ }: any) => {
 
     try {
-        const response = await fetch(`${url}/api/sets/get`);
+        const response = await fetch(`${url}/set/getAll`);
         if (!response.ok) {
             throw new Error('Error al cargar los ejercicios');
         }
@@ -28,6 +28,7 @@ export const getServerSideProps = async ({ }: any) => {
         };
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+        console.log(error)
         return {
             props: { exercises: [], error: error.message || 'Hubo un problema al cargar los ejercicios' },
         };
