@@ -5,12 +5,15 @@ import Swal from 'sweetalert2';
  * Muestra una alerta de éxito.
  * @param message - El mensaje que se mostrará en la alerta.
  */
-export const showSuccessAlert = (message: string) => {
+export const showSuccessAlert = ({ text, title }: { text: string, title: string }) => {
   Swal.fire({
     icon: 'success',
-    title: 'Éxito',
-    text: message,
-    confirmButtonText: 'Aceptar',
+    title,
+    text,
+    // footer: '<a href="">¿Necesitas ayuda?</a>',
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false
   });
 };
 
@@ -21,9 +24,12 @@ export const showSuccessAlert = (message: string) => {
 export const showErrorAlert = (message: string) => {
   Swal.fire({
     icon: 'error',
-    title: 'Error',
+    title: 'Oops...',
     text: message,
-    confirmButtonText: 'Aceptar',
+    footer: '<a href="">¿Necesitas ayuda?</a>',
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false
   });
 };
 

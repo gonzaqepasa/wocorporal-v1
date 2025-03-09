@@ -1,7 +1,7 @@
 // pages/index.tsx
-import NavBarExercises from "@/components/Navs/NavAdmin";
 import SetsList from "@/components/Sets/SetsList";
 import { url } from "@/config/env_d";
+import ProtectedRoute from "@/pages/_ProtectedRoute";
 
 
 
@@ -38,11 +38,12 @@ export const getServerSideProps = async ({ }: any) => {
 const SetsListPage: React.FC<SetsListPageProps> = ({ sets, error }) => {
     return (
         <>
-            <main className="min-h-screen flex flex-col items-center">
-                <NavBarExercises />
-                <h1 className="text-3xl font-bold my-8">Lista de Sets</h1>
-                <SetsList error={error} sets={sets} />
-            </main>
+            <ProtectedRoute allowedRoles={['admin', 'trainer']}>
+                <main className="min-h-screen flex flex-col items-center">
+                    <h1 className="text-3xl font-bold my-8">Lista de Sets</h1>
+                    <SetsList error={error} sets={sets} />
+                </main>
+            </ProtectedRoute>
         </>
     );
 };

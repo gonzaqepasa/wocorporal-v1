@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { Modal, Button, Dropdown, ModalHeader, ModalBody, DropdownMenu, DropdownTrigger, DropdownItem, ModalFooter, useDisclosure, ModalContent, Input } from "@nextui-org/react";
-import { TypesExercise } from "@/types/exercises";
+import { Modal, Button, ModalHeader, ModalBody, useDisclosure, ModalContent, Input, ModalFooter } from "@nextui-org/react";
 import { GrAdd } from "react-icons/gr";
-import { capitalizeWords } from "@/utils/TextUtils";
-import Difficulty from "@/components/Difficult/DifficultyFires";
-import { formatUpdatedAt } from "@/utils/DateUtils";
 import { showErrorAlert, showSuccessAlert } from "@/utils/SweetAlertUtils";
 import { useRouter } from "next/router";
-
+import { url } from "@/config/env_d";
+import CustomSelect from "@/components/Globals/select/CustomSelect";
+import { useAuth } from "@/pages/_AuthProvider";
 
 
 
@@ -17,25 +15,34 @@ interface Params {
 
 }
 
-const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
-    const [exercises, setExercises] = useState<TypesExercise[]>([]);
-    const [selectedExercise, setSelectedExercise] = useState<TypesExercise | null>(null);
+const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
+    const { user } = useAuth()
+    const [load, setLoad] = useState<boolean>(true);
+    const [exercises, setExercises] = useState<{ name: string, id: string }[]>([]);
+    const [selectedExercise, setSelectedExercise] = useState<{ id: string, name: string }>();
     const [configExercise, setConfigExercise] = useState({
         reps: 0,
         rest: 0,
         duration: 0
     });
+
     const router = useRouter()
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     // Cargar ejercicios desde la base de datos
     useEffect(() => {
         const fetchExercises = async () => {
             try {
-                const response = await fetch("/api/exercises");
-                if (!response.ok) throw new Error("Error al cargar los ejercicios");
+                const response = await fetch(`${url}/exercise/get/namelist`);
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "Error al cargar los ejercicios");
+                }
                 const data = await response.json();
+                console.log(data)
                 setExercises(data);
+                setLoad(false)
             } catch (error) {
+                setLoad(false)
                 console.error(error);
             }
         };
@@ -45,11 +52,12 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
         }
     }, [isOpen]);
 
-    // Manejar la selección de un ejercicio
-    const handleSelectExercise = (exerciseId: string) => {
-        const exercise = exercises.find((ex) => ex._id === exerciseId) || null;
+    const handleSelectExercise = (exerciseId: Set<never>) => {
+        // const exercise = exercises.find((exercise) => exercise.id === String(exerciseId));
+        const exercise = exercises.find((exercise) => exercise.id === Array.from(exerciseId)[0]);
+        // console.log(exercise);
         setSelectedExercise(exercise);
-    };
+    }
     // Cambia la configuracion
     // Manejar los cambios en la configuración del ejercicio
     const handleConfigChange = (field: string, value: number) => {
@@ -64,16 +72,23 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
     const handleAddExercise = async ({ exerciseId, reps, duration, rest }: { exerciseId: string, reps: number, duration: number, rest: number }) => {
         if (selectedExercise) {
             try {
-                const response = await fetch(`/api/sets/add-exercise/${setId}`, {
+                const response = await fetch(`${url}/sets/add-exercise/${setId}`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json"
+                        , Authorization: `Bearer ${user?.token}`
+                    },
                     body: JSON.stringify({ exerciseId, reps, duration, rest }),
                 });
 
-                if (!response.ok) throw new Error("Error al actualizar el set");
+                if (!response.ok) {
+                    const error = await response.json();
+                    console.log(error.message);
+                    throw new Error(error.message || "Error al agregar el ejercicio al set");
+                }
 
 
-                showSuccessAlert("Se agrego el ejercicio con exito")
+                showSuccessAlert({ title: "Ejercicio agregado", text: "El ejercicio se agregó correctamente" })
                 router.reload()
             } catch (error) {
                 console.error(error);
@@ -86,7 +101,7 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
     return (
         <>
             <Button onPress={onOpen} variant="light" color="primary">Agregar ejercicio al set</Button>
-            <Modal isOpen={isOpen} className="dark" onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} className="" onOpenChange={onOpenChange}>
                 <ModalContent>
                     {onClose => (
                         <>
@@ -99,9 +114,9 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
                             </ModalHeader>
                             <ModalBody>
                                 <span className=" flex flex-col gap-1">
-                                    {selectedExercise && <p className="text-lg text-neutral-200">{capitalizeWords(selectedExercise.name)}</p>}
-                                    {selectedExercise && <Difficulty size={12} difficulty={selectedExercise.difficulty} />}
-                                    {selectedExercise && <p className="text-xs text-neutral-400 font-light">{formatUpdatedAt(selectedExercise.updatedAt)}</p>}
+                                    {selectedExercise && <p className="text-lg text-neutral-200">{selectedExercise.name}</p>}
+                                    {/* {selectedExercise && <Difficulty size={12} difficulty={selectedExercise.difficulty} />} */}
+                                    {/* {selectedExercise && <p className="text-xs text-neutral-400 font-light">{formatUpdatedAt(selectedExercise.updatedAt)}</p>} */}
                                 </span>
                                 <form className="flex gap-4">
                                     <Input
@@ -138,37 +153,32 @@ const AddExerciseToSet: React.FC<Params> = ({ setId }) => {
                                         onChange={(e) => handleConfigChange("rest", Number(e.target.value))}
                                     />
                                 </form>
-                                <Dropdown className="dark" >
-                                    <DropdownTrigger  >
-                                        <Button variant="bordered" color="primary">
-                                            Selecciona un Ejercicio
-                                        </Button>
-                                    </DropdownTrigger>
-                                    <DropdownMenu
-                                        color="primary"
-                                        onAction={(key) => handleSelectExercise(key as string)}
-                                        selectedKeys={selectedExercise ? [selectedExercise._id] : []}
-                                    >
-                                        {exercises.map((exercise) => (
-                                            <DropdownItem key={exercise._id}>{capitalizeWords(exercise.name)}</DropdownItem>
-                                        ))}
-                                    </DropdownMenu>
-                                </Dropdown>
+                                {load ? <p>Cargando...</p> :
+                                    <>
+                                        <CustomSelect exercises={exercises} onChangeExercise={handleSelectExercise} />
+                                    </>
+
+                                }
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onClick={onClose}>
                                     Cancelar
                                 </Button>
-                                <Button isDisabled={!selectedExercise?._id || !configExercise.reps && !configExercise.duration} onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?._id), duration: configExercise.duration, reps: configExercise.reps, rest: configExercise.rest })} color="primary" disabled={!selectedExercise}>
+                                <Button isDisabled={!selectedExercise?.id || !configExercise.reps && !configExercise.duration} onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?.id), duration: configExercise.duration, reps: configExercise.reps, rest: configExercise.rest })} color="primary" disabled={!selectedExercise}>
                                     Agregar
                                 </Button>
                             </ModalFooter>
                         </>
                     )}
                 </ModalContent>
-            </Modal>
+            </Modal >
         </>
     );
 };
 
-export default AddExerciseToSet;
+export default AddExerciseToSetModal;
+
+
+
+
+

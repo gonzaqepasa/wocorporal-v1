@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // pages/exercises.tsx
 
+import { useAuth } from "@/pages/_AuthProvider";
 import { TypesSet } from "@/types/sets";
 import { capitalizeWords } from "@/utils/TextUtils";
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
@@ -20,27 +21,25 @@ interface ExercisesPageProps {
 
 
 const SetsList: React.FC<ExercisesPageProps> = ({ sets, error }) => {
+    const { user } = useAuth();
     if (error) {
         return <p className="text-center text-red-500">{error}</p>;
     }
 
-    if (sets.length === 0) {
-        return <p className="text-center text-gray-500">No hay ejercicios disponibles.</p>;
-    }
 
     return (
 
         <>
             <div>
             </div>
-            <Table className=" max-w-lg w-[95vw] overflow-auto dark" aria-label='none' >
+            <Table radius="none" className="  w-screen overflow-auto " aria-label='none' >
                 <TableHeader>
                     <TableColumn>NOMBRE</TableColumn>
                     <TableColumn>N° Ej</TableColumn>
                     <TableColumn>TIPO</TableColumn>
                     <TableColumn>OPCIONES</TableColumn>
                 </TableHeader>
-                <TableBody >
+                <TableBody emptyContent={"No rows to display."}>
                     {sets.map((set) => (
                         <TableRow className=' ' key={set._id}>
                             <TableCell className="text-sm text-nowrap">
@@ -52,7 +51,7 @@ const SetsList: React.FC<ExercisesPageProps> = ({ sets, error }) => {
                             </TableCell>
                             <TableCell className='p-0'>
                                 <Button className="min-w-0" variant="light">
-                                    <Link href={`/sets/edit/${set._id}`}>
+                                    <Link href={`/trainer/sets/edit/${set._id}?apiKey=${user?.apiKey}`}>
                                         <BiEdit />
                                     </Link>
 
