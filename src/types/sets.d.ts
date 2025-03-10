@@ -1,3 +1,6 @@
+import { TypesExercise } from "./exercises";
+
+
 export interface TypesSet {
     createdAt: Date;
     updatedAt: Date;
@@ -9,7 +12,7 @@ export interface TypesSet {
         exercise: TypesExercise,
         reps: number,
         duration: number
-        rest: number
+        description:string
     }>
     rounds: number
 }

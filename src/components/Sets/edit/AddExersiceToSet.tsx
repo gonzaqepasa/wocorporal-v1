@@ -1,32 +1,36 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Modal, Button, ModalHeader, ModalBody, useDisclosure, ModalContent, Input, ModalFooter } from "@nextui-org/react";
 import { GrAdd } from "react-icons/gr";
-import { showErrorAlert, showSuccessAlert } from "@/utils/SweetAlertUtils";
-import { useRouter } from "next/router";
+import { showErrorAlert } from "@/utils/SweetAlertUtils";
 import { url } from "@/config/env_d";
 import CustomSelect from "@/components/Globals/select/CustomSelect";
 import { useAuth } from "@/pages/_AuthProvider";
+import { TypesExercise } from "@/types/exercises";
 
 
 
 
 interface Params {
     setId: string
-
+    onAddExercise: Dispatch<SetStateAction<{
+        exercise: TypesExercise;
+        reps: number;
+        duration: number;
+        description: string;
+    }[]>>
 }
 
-const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
+const AddExerciseToSetModal: React.FC<Params> = ({ setId, onAddExercise }) => {
     const { user } = useAuth()
     const [load, setLoad] = useState<boolean>(true);
-    const [exercises, setExercises] = useState<{ name: string, id: string }[]>([]);
-    const [selectedExercise, setSelectedExercise] = useState<{ id: string, name: string }>();
+    const [exercises, setExercises] = useState<TypesExercise[]>([]);
+    const [selectedExercise, setSelectedExercise] = useState<TypesExercise>();
     const [configExercise, setConfigExercise] = useState({
         reps: 0,
-        rest: 0,
+        description: "",
         duration: 0
     });
 
-    const router = useRouter()
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     // Cargar ejercicios desde la base de datos
     useEffect(() => {
@@ -54,13 +58,15 @@ const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
 
     const handleSelectExercise = (exerciseId: Set<never>) => {
         // const exercise = exercises.find((exercise) => exercise.id === String(exerciseId));
-        const exercise = exercises.find((exercise) => exercise.id === Array.from(exerciseId)[0]);
+        const exercise = exercises.find((exercise) => exercise._id === Array.from(exerciseId)[0]);
         // console.log(exercise);
         setSelectedExercise(exercise);
+
+
     }
     // Cambia la configuracion
     // Manejar los cambios en la configuración del ejercicio
-    const handleConfigChange = (field: string, value: number) => {
+    const handleConfigChange = (field: string, value: number | string) => {
         setConfigExercise((prev) => ({
             ...prev,
             [field]: value,
@@ -69,16 +75,16 @@ const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
 
     // Manejar la acción de agregar el ejercicio al set
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleAddExercise = async ({ exerciseId, reps, duration, rest }: { exerciseId: string, reps: number, duration: number, rest: number }) => {
+    const handleAddExercise = async ({ exerciseId, reps, duration, description }: { exerciseId: string, reps: number, duration: number, description: string }) => {
         if (selectedExercise) {
             try {
-                const response = await fetch(`${url}/sets/add-exercise/${setId}`, {
+                const response = await fetch(`${url}/set/add-exercise/${setId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
                         , Authorization: `Bearer ${user?.token}`
                     },
-                    body: JSON.stringify({ exerciseId, reps, duration, rest }),
+                    body: JSON.stringify({ exerciseId, reps, duration, description }),
                 });
 
                 if (!response.ok) {
@@ -88,11 +94,13 @@ const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
                 }
 
 
-                showSuccessAlert({ title: "Ejercicio agregado", text: "El ejercicio se agregó correctamente" })
-                router.reload()
-            } catch (error) {
+                // showSuccessAlert({ title: "Ejercicio agregado", text: "El ejercicio se agregó correctamente" })
+                onAddExercise(prev => [...prev, { exercise: selectedExercise, reps, duration, description }])
+                onOpenChange()
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
                 console.error(error);
-                showErrorAlert("Error al actualizar el set")
+                showErrorAlert(error.message)
             }
 
         }
@@ -145,12 +153,12 @@ const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
                                         required
                                         variant="faded"
                                         color="primary"
-                                        label="Descanso (s)"
+                                        label="Descripcion"
                                         min={0}
                                         max={600}
-                                        type="number"
-                                        value={configExercise.rest.toString()}
-                                        onChange={(e) => handleConfigChange("rest", Number(e.target.value))}
+                                        type="text"
+                                        value={configExercise.description.toString()}
+                                        onChange={(e) => handleConfigChange("description", String(e.target.value))}
                                     />
                                 </form>
                                 {load ? <p>Cargando...</p> :
@@ -164,7 +172,7 @@ const AddExerciseToSetModal: React.FC<Params> = ({ setId }) => {
                                 <Button color="danger" variant="light" onClick={onClose}>
                                     Cancelar
                                 </Button>
-                                <Button isDisabled={!selectedExercise?.id || !configExercise.reps && !configExercise.duration} onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?.id), duration: configExercise.duration, reps: configExercise.reps, rest: configExercise.rest })} color="primary" disabled={!selectedExercise}>
+                                <Button isDisabled={!selectedExercise?._id || !configExercise.reps && !configExercise.duration} onClick={() => handleAddExercise({ exerciseId: String(selectedExercise?._id), duration: configExercise.duration, reps: configExercise.reps, description: configExercise.description })} color="primary" disabled={!selectedExercise}>
                                     Agregar
                                 </Button>
                             </ModalFooter>

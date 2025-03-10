@@ -33,7 +33,7 @@ const ExerciseModal: React.FC<Exercise> = ({ exercise, config }) => {
             <Button color="primary" variant="light" className="flex items-center gap-0    min-w-10" onPress={onOpen}>
                 {config?.icon && <MdPlayArrow />}
                 <p>
-                    {capitalizeWords(exercise.name)}
+                    {capitalizeWords(String(exercise.name))}
                 </p>
 
             </Button>
