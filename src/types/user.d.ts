@@ -1,4 +1,4 @@
-interface User {
+export interface TypesUser {
     routines: Record<string, unknown>;
     _id: string;
     email: string;

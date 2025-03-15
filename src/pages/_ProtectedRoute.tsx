@@ -32,7 +32,12 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     return <div className="flex justify-center items-center h-screen">Cargando...</div>;
   }
 
-  if (isAuthenticated || user) return <>{children}</>;
+  if (user?.error) return <div className="flex flex-col justify-center items-center h-screen">
+    <h1>Hubo un error</h1>
+    <p>{user.error}</p>
+  </div>
+
+  if (isAuthenticated && user) return <>{children}</>;
 
   return <div className="flex justify-center items-center h-screen">No estas logueado</div>;
 

@@ -95,7 +95,7 @@ const PanelTrainerMain = () => {
                             <Link href={`/trainer/sets?apiKey=${user?.apiKey}`} >Panel de Sets</Link>
                         </Button>
                         <Button color="primary" variant="light" className="justify-start">
-                            <Link href={``} >Panel de Rutinas</Link>
+                            <Link href={`/trainer/rutinas?apiKey=${user?.apiKey}`} >Panel de Rutinas</Link>
                         </Button>
                         <Button color="primary" variant="light" className="justify-start">
                             <Link href={``} >Panel de usuarios</Link>

@@ -1,10 +1,11 @@
 import { TypesExercise } from "@/types/exercises";
+import { TypesSet } from "@/types/sets";
 import { capitalizeWords } from "@/utils/TextUtils";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
 interface Props {
-    exercises: TypesExercise[]
+    exercises: TypesExercise[] | TypesSet[]
     onChangeExercise: (exerciseId: Set<never>) => void
 }
 
@@ -19,6 +20,8 @@ const CustomSelect: React.FC<Props> = ({ exercises, onChangeExercise }) => {
         setValues(new Set(e.target.value.split(",")));
         onChangeExercise(new Set(e.target.value.split(",")))
     };
+
+    
     return (<>
         <Select
 

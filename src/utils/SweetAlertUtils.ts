@@ -13,7 +13,9 @@ export const showSuccessAlert = ({ text, title }: { text: string, title: string 
     // footer: '<a href="">¿Necesitas ayuda?</a>',
     timer: 3000,
     timerProgressBar: true,
-    showConfirmButton: false
+    showConfirmButton: false,
+    position: 'bottom-end',
+    toast: true,
   });
 };
 
@@ -29,7 +31,10 @@ export const showErrorAlert = (message: string) => {
     footer: '<a href="">¿Necesitas ayuda?</a>',
     timer: 3000,
     timerProgressBar: true,
-    showConfirmButton: false
+    showConfirmButton: false,
+    position: "bottom-end",
+    toast: true
+
   });
 };
 
