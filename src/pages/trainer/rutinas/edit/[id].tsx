@@ -15,7 +15,7 @@ interface RoutineListPageProps {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.params || {};
     const { apiKey } = context.query;
-    console.log("esto es id", id, apiKey)
+    // console.log("esto es id", id, apiKey)
     try {
         // Hacer la petición al servidor para obtener el set por ID
         const response = await fetch(`${url}/routine/get/${id}?apiKey=${apiKey}`);
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const EditRoutinePage: React.FC<RoutineListPageProps> = ({ rutina, error }) => {
 
-    console.log(rutina, error)
+    // console.log(rutina, error)
     if (error) return <ErrorPageMain>
         <p>{error}</p>
     </ErrorPageMain>

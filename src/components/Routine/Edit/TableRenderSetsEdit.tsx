@@ -18,7 +18,7 @@ const TableRenderSetsEdit: React.FC<Props> = ({ rutina }) => {
     const [sets, setSets] = useState<TypesSet[]>(rutina.sets)
 
 
-    console.log("esto se va a sets",sets)
+    // console.log("esto se va a sets",sets)
 
 
     return (<>

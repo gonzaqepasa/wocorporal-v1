@@ -33,7 +33,7 @@ const AddSetToRoutine: React.FC<Props> = ({ rutina ,onAddSet}) => {
                     throw new Error(error.error || "Error al cargar los sets");
                 }
                 const data = await response.json();
-                console.log(data)
+                // console.log(data)
                 setSets(data);
                 
                 setLoad(false)
@@ -79,7 +79,7 @@ const AddSetToRoutine: React.FC<Props> = ({ rutina ,onAddSet}) => {
 
                 const data: TypesRoutine = await response.json()
                 showSuccessAlert({ title: "Set agregado", text: "El set se agregó correctamente" })
-                console.log("ASDASDASD",data.sets)
+                // console.log("ASDASDASD",data.sets)
                 onAddSet(data.sets)
                 onOpenChange()
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
