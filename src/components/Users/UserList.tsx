@@ -63,7 +63,7 @@ const UsersList: React.FC<UsersPageProps> = ({ users }) => {
                             </TableCell>
                             <TableCell className='p-0'>
                                 <Button className="min-w-0" variant="light">
-                                    <Link href={`/trainer/sets/edit/${u._id}?apiKey=${user?.apiKey}`}>
+                                    <Link href={`/trainer/users/edit/${u._id}?apiKey=${user?.apiKey}`}>
                                         <BiEdit />
                                     </Link>
                                 </Button>
