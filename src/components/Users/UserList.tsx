@@ -7,6 +7,7 @@ import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow
 import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
 import RoutineIndicator from "./RoutinesIndicator";
+import SelectPlanToUser from "./options/SelectPlanToUser";
 
 
 
@@ -31,14 +32,14 @@ const UsersList: React.FC<UsersPageProps> = ({ users }) => {
             <Table radius="none" className="  w-screen overflow-auto " aria-label='none' >
                 <TableHeader>
                     <TableColumn>USUARIO</TableColumn>
-                    <TableColumn>ESTADO</TableColumn>
+                    <TableColumn>PLAN</TableColumn>
 
                     <TableColumn>RUTINAS</TableColumn>
                     <TableColumn>OPCIONES</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={"No rows to display."}>
                     {users.map((u) => (
-                        <TableRow className=' ' key={u._id}>
+                        <TableRow className={`${u.status === "deptor" && "bg-warning-500/40"}`} key={u._id}>
                             <TableCell className="text-sm flex items-center gap-1 text-nowrap">
                                 <User
                                     avatarProps={{
@@ -48,7 +49,14 @@ const UsersList: React.FC<UsersPageProps> = ({ users }) => {
                                     name={u.name}
                                 />
                             </TableCell>
-                            <TableCell className='' ><p className="capitalize">{u.status}</p></TableCell>
+                            <TableCell  >
+                                <div className='flex flex-col items-start'>
+                                    <p className="font-semibold">{u.plan.selectedPlan.name}</p>
+                                    <p className={`capitalize px-2 rounded-full text-xs shadow ${u.status === "active" ? "bg-success-500" : "bg-warning-500"} `}>{u.status}</p>
+                                </div>
+
+
+                            </TableCell>
 
                             <TableCell className='p-0'>
                                 <RoutineIndicator rutinas={u.routines} />
@@ -58,11 +66,12 @@ const UsersList: React.FC<UsersPageProps> = ({ users }) => {
                                     <Link href={`/trainer/sets/edit/${u._id}?apiKey=${user?.apiKey}`}>
                                         <BiEdit />
                                     </Link>
-                                    {/* Editar */}
-                                    {/* Seleccionar plan */}
-                                    {/* Cambiar Estado */}
-                                    {/* Agregar pago */}
                                 </Button>
+                                {/* Editar */}
+                                {/* Seleccionar plan */}
+                                {/* Cambiar Estado */}
+                                {/* Agregar pago */}
+                                <SelectPlanToUser us={u} />
                             </TableCell>
                         </TableRow>
                     ))}

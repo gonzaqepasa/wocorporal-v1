@@ -1,11 +1,12 @@
 import { TypesExercise } from "@/types/exercises";
+import { TypesPlan } from "@/types/plan";
 import { TypesSet } from "@/types/sets";
 import { capitalizeWords } from "@/utils/TextUtils";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
 interface Props {
-    exercises: TypesExercise[] | TypesSet[]
+    exercises: TypesExercise[] | TypesSet[]| TypesPlan[]
     onChangeExercise: (exerciseId: Set<never>) => void
 }
 
