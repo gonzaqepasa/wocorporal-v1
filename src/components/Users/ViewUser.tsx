@@ -2,6 +2,7 @@ import { TypesUser } from "@/types/user";
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from "@nextui-org/react";
 import ViewPlan from "../Globals/plan/ViewPlan";
 import { formatCreatedAt } from "../Globals/formats/DateUtils";
+import AddRoutineToUser from "./edit/AddRoutineToUser";
 
 interface Props {
     user: TypesUser
@@ -51,7 +52,7 @@ const ViewUser: React.FC<Props> = ({ user, config }) => {
                         <p className="text-neutral-500 text-sm">
                             Fecha de inicio:
                         </p>
-                        <strong>{formatCreatedAt(user.plan.planEndDate)}</strong>
+                        <strong>{formatCreatedAt(user.plan.planStartDate)}</strong>
                     </div>
                     <div className="flex flex-col items-center ">
                         <p className="text-neutral-500 text-sm">
@@ -63,6 +64,9 @@ const ViewUser: React.FC<Props> = ({ user, config }) => {
             </CardBody>
             <Divider />
             <CardFooter >
+
+                <AddRoutineToUser userToAdd={user} />
+
             </CardFooter>
         </Card>
 
