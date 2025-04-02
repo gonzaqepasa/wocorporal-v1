@@ -1,5 +1,5 @@
 // pages/index.tsx
-import NavBarExercises from "@/components/Navs/NavAdmin";
+import NavBarExercises from "@/components/Globals/Navs/NavMain";
 import CreateSet from "@/components/Sets/create/CreateSetForm";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
 

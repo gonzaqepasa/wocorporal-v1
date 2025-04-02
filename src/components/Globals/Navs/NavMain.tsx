@@ -3,13 +3,24 @@ import { useAuth } from '@/pages/_AuthProvider';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, User } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import NavAdmin from './Navs/NavAdmin';
 
 
 
-const NavAdmin: React.FC = () => {
+const NavMain: React.FC = () => {
     const router = useRouter()
-    const { user, isAuthenticated } = useAuth()
-    console.log(user)
+    const { user, isAuthenticated, logout } = useAuth()
+    console.log(user?.role)
+
+    if (!user) return
+    if (user?.role === "admin") return <NavAdmin user={user} isAuthenticated logout={logout} />
+    if (user?.role === "trainer") return <>TRAINER</>
+    if (user?.role === "user") return <>USER</>
+
+
+
+
+
     return (
         <Navbar isBordered className="bg-primary-500 text-white ">
             <NavbarBrand>
@@ -96,4 +107,4 @@ const NavAdmin: React.FC = () => {
     );
 };
 
-export default NavAdmin;
+export default NavMain;

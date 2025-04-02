@@ -1,5 +1,5 @@
 import PanelMainAdmin from "@/components/dashboard/admin/PanelMainAdmin";
-import NavAdmin from "@/components/Navs/NavAdmin";
+import NavAdmin from "@/components/Globals/Navs/NavMain";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
 
 const AdminDashboardPage = () => {

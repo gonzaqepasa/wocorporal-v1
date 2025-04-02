@@ -1,4 +1,5 @@
 // pages/index.tsx
+import NavMain from "@/components/Globals/Navs/NavMain";
 import UsersList from "@/components/Users/UserList";
 import { url } from "@/config/env_d";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
@@ -53,6 +54,7 @@ const SetsListPage: React.FC<SetsListPageProps> = ({ users, error }) => {
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'trainer']}>
+                <NavMain />
                 <main className="min-h-screen flex flex-col items-center">
                     <h1 className="text-3xl font-bold my-8">Lista de Usuarios</h1>
                     <UsersList users={users} />

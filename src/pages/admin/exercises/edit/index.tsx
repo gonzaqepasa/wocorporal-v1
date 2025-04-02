@@ -1,5 +1,5 @@
 import EditExercise from "@/components/AddExercises/EditExercise";
-import NavBarExercises from "@/components/Navs/NavAdmin";
+import NavBarExercises from "@/components/Globals/Navs/NavMain";
 import { url } from "@/config/env_d";
 import { GetServerSideProps } from "next";
 interface Exercise {

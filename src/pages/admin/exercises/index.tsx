@@ -1,6 +1,6 @@
 // pages/index.tsx
 import ExerciseListAdmin from "@/components/AddExercises/ExercisesListAdmin";
-import NavBarExercises from "@/components/Navs/NavAdmin";
+import NavBarExercises from "@/components/Globals/Navs/NavMain";
 import { url } from "@/config/env_d";
 import { sortExercises } from "@/logic/order/orderlist";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
