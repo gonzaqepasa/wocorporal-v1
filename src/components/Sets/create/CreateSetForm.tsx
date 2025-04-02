@@ -2,10 +2,10 @@ import { FormEvent, useState } from "react";
 import { Input, Button, Card, CardHeader, CardBody, CardFooter, Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { TypesSet } from "@/types/sets";
-import { SweetMessageError } from "@/swal/SweetMessageError";
 import { url } from "@/config/env_d";
 import { useAuth } from "@/pages/_AuthProvider";
 import { capitalizeWords } from "@/utils/TextUtils";
+import { showErrorAlert } from "@/utils/SweetAlertUtils";
 
 const CreateSet: React.FC = () => {
     const [setName, setSetName] = useState("");
@@ -48,9 +48,9 @@ const CreateSet: React.FC = () => {
             setSetName("");
             setType("");
             setRounds(1);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            SweetMessageError({ errorMsg: error.message });
+            showErrorAlert(error.message);
         }
     };
 

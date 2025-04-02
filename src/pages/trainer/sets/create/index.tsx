@@ -1,5 +1,5 @@
 // pages/index.tsx
-import NavBarExercises from "@/components/Globals/Navs/NavMain";
+import NavbarMain from "@/components/Globals/Navs/NavMain";
 import CreateSet from "@/components/Sets/create/CreateSetForm";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
 
@@ -13,7 +13,7 @@ const CreateSetPage = () => {
             <ProtectedRoute allowedRoles={['admin', 'trainer']}>
 
                 <main className="min-h-screen flex flex-col items-center">
-                    <NavBarExercises />
+                    <NavbarMain />
 
                     <CreateSet />
                 </main >

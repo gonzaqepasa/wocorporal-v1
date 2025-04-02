@@ -9,12 +9,12 @@ const TrainerPage = () => {
 
 
     return (<>
-        <main className={`min-h-screen flex flex-col items-center`}>
-            <NavMain/>
-            <ProtectedRoute allowedRoles={["trainer", "admin"]}>
+        <ProtectedRoute allowedRoles={["trainer", "admin"]}>
+            <NavMain />
+            <main className={`min-h-screen flex flex-col items-center`}>
                 <PanelTrainerMain />
-            </ProtectedRoute>
-        </main>
+            </main>
+        </ProtectedRoute>
     </>);
 }
 

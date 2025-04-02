@@ -1,6 +1,8 @@
 import EditExercise from "@/components/AddExercises/EditExercise";
-import NavBarExercises from "@/components/Globals/Navs/NavMain";
+import NavMain from "@/components/Globals/Navs/NavMain";
+import ErrorPageMain from "@/components/Globals/pages/ErrorPages";
 import { url } from "@/config/env_d";
+import ProtectedRoute from "@/pages/_ProtectedRoute";
 import { GetServerSideProps } from "next";
 interface Exercise {
     _id: string;
@@ -17,7 +19,7 @@ interface PageProps {
     error: string | null;
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { id,apiKey } = context.query;
+    const { id, apiKey } = context.query;
     // console.log("ESTE ES EL ID", id);
     try {
         const response = await fetch(`${url}/exercise/${id}?apiKey=${apiKey}`);
@@ -39,20 +41,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const ExercisesEditPage: React.FC<PageProps> = ({ exercise, error }) => {
 
 
-    if (error) {
-        return <p className="text-center text-red-500">{error}</p>;
+    if (error || exercise === null) {
+        return <ErrorPageMain>
+            <p className="text-center text-red-500">{error}</p>;
+        </ErrorPageMain>
     }
 
-    if (!exercise) {
-        return <p className="text-center text-gray-500">No se encontró el ejercicio.</p>;
-    }
+
 
 
     return (<>
-        <main className="min-h-screen flex flex-col items-center">
-            <NavBarExercises />
-            <EditExercise exercise={exercise}  />
-        </main>
+        <ProtectedRoute allowedRoles={['admin', 'trainer']}>
+            <NavMain />
+            <main className="min-h-screen flex flex-col items-center">
+                <EditExercise exercise={exercise} />
+            </main>
+        </ProtectedRoute>
     </>);
 }
 

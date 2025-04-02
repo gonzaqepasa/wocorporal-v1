@@ -2,6 +2,9 @@ import { GetServerSideProps } from "next";
 import { url } from "@/config/env_d";
 import { TypesSet } from "@/types/sets";
 import EditSetForm from "@/components/Sets/edit/MainEditSetForm";
+import ErrorPageMain from "@/components/Globals/pages/ErrorPages";
+import ProtectedRoute from "@/pages/_ProtectedRoute";
+import NavMain from "@/components/Globals/Navs/NavMain";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params || {};
@@ -9,13 +12,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     // Hacer la petición al servidor para obtener el set por ID
     const response = await fetch(`${url}/set/getById/${id}?apiKey=${apiKey}`);
+    const set = await response.json();
     if (!response.ok) {
-      const error = await response.json();
-      console.log(error);
-      throw new Error(error.error || "Hubo un problema al cargar el set");
+      throw new Error(set.error || "Hubo un problema al cargar el set");
     }
 
-    const set = await response.json();
     return { props: { set, error: null } };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -26,23 +27,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const EditSetPage = ({ set, error }: { set: TypesSet; error: string | null }) => {
-  console.log(set)
   if (error) {
-    return <main className="min-h-screen flex flex-col items-center gap-2 p-6">
+    return <ErrorPageMain >
       <p className="text-red-500 text-center">{error}</p>;
-    </main>
+    </ErrorPageMain>
   }
 
-  if (!set) {
-    return <main className="min-h-screen flex flex-col items-center gap-2 p-6">
-      <p className="text-gray-500 text-center">No se pudo encontrar el set.</p>;
+
+
+  return <ProtectedRoute allowedRoles={['admin', 'trainer']}>
+    <main className="min-h-screen flex flex-col items-center gap-2 p-6">
+      <NavMain />
+      <EditSetForm set={set} />
+
     </main>
-  }
-
-  return <main className="min-h-screen flex flex-col items-center gap-2 p-6">
-    <EditSetForm set={set} />
-
-  </main>
+  </ProtectedRoute>
 };
 
 export default EditSetPage;

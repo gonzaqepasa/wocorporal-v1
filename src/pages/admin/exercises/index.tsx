@@ -1,6 +1,6 @@
 // pages/index.tsx
 import ExerciseListAdmin from "@/components/AddExercises/ExercisesListAdmin";
-import NavBarExercises from "@/components/Globals/Navs/NavMain";
+import NavMain from "@/components/Globals/Navs/NavMain";
 import { url } from "@/config/env_d";
 import { sortExercises } from "@/logic/order/orderlist";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
@@ -42,13 +42,13 @@ export const getServerSideProps = async ({ query }: any) => {
 const ExerciseListPage: React.FC<ExerciseListPageProps> = ({ exercises, error }) => {
   return (
     <>
-      <main className="min-h-screen flex flex-col items-center background-admin">
-        <NavBarExercises />
-        <ProtectedRoute allowedRoles={["admin"]}>
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <NavMain />
+        <main className="min-h-screen flex flex-col items-center background-admin">
           <h1 className="text-3xl font-bold my-8">Lista de Ejercicios</h1>
           <ExerciseListAdmin exercises={exercises} error={error} />
-        </ProtectedRoute>
-      </main>
+        </main>
+      </ProtectedRoute>
     </>
   );
 };

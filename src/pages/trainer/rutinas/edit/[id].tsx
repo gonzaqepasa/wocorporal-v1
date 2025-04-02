@@ -1,3 +1,4 @@
+import NavMain from "@/components/Globals/Navs/NavMain";
 import ErrorPageMain from "@/components/Globals/pages/ErrorPages";
 import EditRoutineForm from "@/components/Routine/Edit/MainEditRoutineForm";
 import { url } from "@/config/env_d";
@@ -42,6 +43,7 @@ const EditRoutinePage: React.FC<RoutineListPageProps> = ({ rutina, error }) => {
     </ErrorPageMain>
     return (<>
         <ProtectedRoute allowedRoles={["trainer"]} >
+            <NavMain />
             <main className="min-h-screen flex flex-col items-center" >
                 <EditRoutineForm rutina={rutina} />
 

@@ -21,11 +21,9 @@ interface RoutinesPageProps {
 
 
 
-const RoutinesList: React.FC<RoutinesPageProps> = ({ routines, error }) => {
+const RoutinesList: React.FC<RoutinesPageProps> = ({ routines }) => {
     const { user } = useAuth();
-    if (error) {
-        return <p className="text-center text-red-500">{error}</p>;
-    }
+  
 
 
     return (

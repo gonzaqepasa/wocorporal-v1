@@ -1,13 +1,16 @@
 import ExerciseForm from "@/components/AddExercises/FormAddExercises";
-import NavBarExercises from "@/components/Globals/Navs/NavMain";
+import NavMain from "@/components/Globals/Navs/NavMain";
+import ProtectedRoute from "@/pages/_ProtectedRoute";
 
 
 const ExercisesAddPage = () => {
     return (<>
-        <main className="min-h-screen flex flex-col items-center">
-            <NavBarExercises />
-            <ExerciseForm onSuccess={() => { }} />
-        </main>
+        <ProtectedRoute allowedRoles={["admin", "trainer"]}>
+            <NavMain />
+            <main className="min-h-screen flex flex-col items-center">
+                <ExerciseForm onSuccess={() => { }} />
+            </main>
+        </ProtectedRoute>
     </>);
 }
 

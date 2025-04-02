@@ -20,12 +20,9 @@ interface ExercisesPageProps {
 
 
 
-const SetsList: React.FC<ExercisesPageProps> = ({ sets, error }) => {
+const SetsList: React.FC<ExercisesPageProps> = ({ sets }) => {
     const { user } = useAuth();
-    if (error) {
-        return <p className="text-center text-red-500">{error}</p>;
-    }
-
+ 
 
     return (
 
