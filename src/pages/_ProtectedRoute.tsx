@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "./_AuthProvider";
+import ErrorPageLogin from "@/components/Globals/pages/ErrorPagesLogin";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -32,13 +33,15 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     return <div className="flex justify-center items-center h-screen">Cargando...</div>;
   }
 
-  if (user?.error) return <div className="flex flex-col justify-center items-center h-screen">
-    <h1>Hubo un error</h1>
-    <p>{user.error}</p>
-  </div>
+  if (user?.error) return <ErrorPageLogin code={user.error}>
+    <p className="text-red-500 text-center">{user.error}</p>
+  </ErrorPageLogin>
 
   if (isAuthenticated && user) return <>{children}</>;
 
-  return <div className="flex justify-center items-center h-screen">No estas logueado</div>;
+  return <ErrorPageLogin code={user?.error}>
+    <p className="text-red-500 text-center">Debes iniciar sesion para ver tu perfil</p>
+  </ErrorPageLogin>
+
 
 }

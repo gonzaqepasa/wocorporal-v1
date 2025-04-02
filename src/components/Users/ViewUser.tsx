@@ -3,6 +3,7 @@ import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from "@nextui-
 import ViewPlan from "../Globals/plan/ViewPlan";
 import { formatCreatedAt } from "../Globals/formats/DateUtils";
 import AddRoutineToUser from "./edit/AddRoutineToUser";
+import ViewRoutineToEdit from "@/pages/trainer/users/edit/ViewRoutinesToEdit";
 
 interface Props {
     user: TypesUser
@@ -17,7 +18,7 @@ interface Props {
 
 const ViewUser: React.FC<Props> = ({ user, config }) => {
     const inactive = user.status === "inactive"
-    console.log(user)
+    // console.log(user)
     return (<>
 
         <Card shadow={config?.shadow} className={`w-full p-0 `}>
@@ -63,10 +64,10 @@ const ViewUser: React.FC<Props> = ({ user, config }) => {
                 </div>
             </CardBody>
             <Divider />
-            <CardFooter >
+            <CardFooter className="flex flex-col" >
 
                 <AddRoutineToUser userToAdd={user} />
-
+                <ViewRoutineToEdit user={user} />
             </CardFooter>
         </Card>
 

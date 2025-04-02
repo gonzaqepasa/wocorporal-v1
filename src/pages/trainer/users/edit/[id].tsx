@@ -4,6 +4,7 @@ import { url } from "@/config/env_d";
 import { TypesUser } from "@/types/user";
 import MainEditUserForm from "@/components/Users/edit/MainEditUserForm";
 import ProtectedRoute from "@/pages/_ProtectedRoute";
+import ErrorPageMain from "@/components/Globals/pages/ErrorPages";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.params || {};
@@ -29,9 +30,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const EditSetPage = ({ user, error }: { user: TypesUser; error: string | null }) => {
     if (error) {
-        return <main className="min-h-screen flex flex-col items-center gap-2 ">
+        return <ErrorPageMain>
             <p className="text-red-500 text-center">{error}</p>;
-        </main>
+
+        </ErrorPageMain>
+        // return <main className="min-h-screen flex flex-col items-center gap-2 ">
+        // </main>
     }
 
 

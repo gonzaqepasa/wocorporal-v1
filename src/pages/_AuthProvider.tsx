@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { AuthContextType, TypesUser } from "@/types/user";
 
 
 
@@ -7,7 +8,7 @@ import Cookies from "js-cookie";
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<TypesUser | null>(null);
   const isAuthenticated = !!user;
 
   useEffect(() => {
