@@ -8,6 +8,9 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDi
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { GrAdd } from "react-icons/gr";
 import SelectDay from "./SelectDay";
+import { MdOutlineAssignment } from "react-icons/md";
+import { HiCalendarDays } from "react-icons/hi2";
+import { FcList } from "react-icons/fc";
 
 interface Props {
     userToAdd: TypesUser
@@ -95,22 +98,27 @@ const AddRoutineToUser: React.FC<Props> = ({ userToAdd, onAddRoutine }) => {
     return (<>
 
 
-        <Button onPress={onOpen} variant="light" color="primary">Agregar ejercicio al set</Button>
+        <Button onPress={onOpen} variant="light" color="primary"><MdOutlineAssignment />
+            ASIGNAR RUTINA</Button>
         <Modal isOpen={isOpen} className="" onOpenChange={onOpenChange}>
             <ModalContent>
                 {onClose => (
                     <>
 
-                        <ModalHeader className="flex flex-col p-2 bg-primary-300 gap-1">
-                            <h3 id="modal-title" className="flex items-center gap-1 text-base text-neutral-200" >
-                                <GrAdd className="text-primary-700" />
-                                Agregar Ejercicio al Set                                </h3>
-
+                        <ModalHeader className="flex flex-col p-3  gap-1">
+                            <h3 id="modal-title" className="flex items-center gap-1 text-base " >
+                                <GrAdd className="text-primary-700" />{`Asignar rutina a ${userToAdd.name}`}</h3>
                         </ModalHeader>
                         <ModalBody>
-                            <span className=" flex flex-col gap-1">
-                                {SelectedRoutine && <p className="text-lg text-neutral-200">{SelectedRoutine.name}</p>}
-                                {SelectedDay && <p className="text-lg text-neutral-200">{SelectedDay}</p>}
+                            <span className=" flex flex-col gap-1 ">
+                                {SelectedRoutine && <p className="flex items-center gap-1 text-lg capitalize font-medium ">
+                                    <FcList />
+                                    {SelectedRoutine?.name || "Nombre de rutina"}
+                                </p>}
+                                {SelectedDay && <p className=" flex items-center  gap-1 text-base italic  capitalize">
+                                    <HiCalendarDays />
+                                    {SelectedDay || "No se selecciono día "}
+                                    </p>}
                                 {/* {selectedExercise && <p className="text-xs text-neutral-400 font-light">{formatUpdatedAt(selectedExercise.updatedAt)}</p>} */}
                             </span>
                             <form className="flex gap-4">
