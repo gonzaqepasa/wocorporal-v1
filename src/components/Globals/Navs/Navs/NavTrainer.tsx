@@ -6,7 +6,6 @@ import MyUserCard from '../../Perfil/MyUserCard';
 import NavLinks from './Links/NavLinks';
 import { SiTrainerroad } from 'react-icons/si';
 import { FaClipboardList, FaDumbbell, FaPlusCircle, FaUserFriends } from 'react-icons/fa';
-import { CiMenuFries } from 'react-icons/ci';
 
 interface Props {
     user: TypesUser
@@ -82,9 +81,18 @@ const NavTrainer: React.FC<Props> = ({ user }) => {
             <NavbarContent className='hidden sm:flex' justify='center'>
                 <Dropdown className='dark flex flex-col gap-2 my-2 w-72 '>
                     <DropdownTrigger>
-                        <Button variant="light" color='default' className='dark'> <CiMenuFries /> Menú</Button>
+                        <Button variant="light" color='default' className='dark'>
+                            <User
+                                avatarProps={{
+                                    src: user?.image
+                                }} name={user?.name} description={user?.email} />
+                        </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
+
+
+
+
                         <DropdownSection>
                             {enlaces.dashboards.map((l) => (
                                 <DropdownItem key={l.title} className='dark'>
@@ -117,17 +125,8 @@ const NavTrainer: React.FC<Props> = ({ user }) => {
                 </Dropdown>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex " justify='end'>
-                <NavbarItem>
-
-                    <User
-                        avatarProps={{
-                            src: user?.image
-                        }} name={user?.name} description={user?.email} />
 
 
-                </NavbarItem>
-            </NavbarContent>
 
 
 
