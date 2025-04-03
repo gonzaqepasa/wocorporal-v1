@@ -6,6 +6,7 @@ import MyUserCard from '../../Perfil/MyUserCard';
 import NavLinks from './Links/NavLinks';
 import { SiTrainerroad } from 'react-icons/si';
 import { FaClipboardList, FaDumbbell, FaPlusCircle, FaUserFriends } from 'react-icons/fa';
+import { CiMenuFries } from 'react-icons/ci';
 
 interface Props {
     user: TypesUser
@@ -22,7 +23,7 @@ interface Props {
 
 
 
-const NavTrainer: React.FC<Props> = ({ user, isAuthenticated }) => {
+const NavTrainer: React.FC<Props> = ({ user }) => {
     const router = useRouter()
     const enlaces = {
         dashboards: [
@@ -81,7 +82,7 @@ const NavTrainer: React.FC<Props> = ({ user, isAuthenticated }) => {
             <NavbarContent className='hidden sm:flex' justify='center'>
                 <Dropdown className='dark flex flex-col gap-2 my-2 w-72 '>
                     <DropdownTrigger>
-                        <Button variant="faded" color='default' className='dark'>Paneles</Button>
+                        <Button variant="light" color='default' className='dark'> <CiMenuFries /> Menú</Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
                         <DropdownSection>
@@ -105,7 +106,7 @@ const NavTrainer: React.FC<Props> = ({ user, isAuthenticated }) => {
                                 </DropdownItem>
                             ))}
                         </DropdownSection>
-                        <DropdownSection title={"Rutinas"} className='pl-3'>
+                        <DropdownSection title={"Sets"} className='pl-3'>
                             {enlaces.sets.map((l) => (
                                 <DropdownItem key={l.title} className='dark'>
                                     <NavLinks pathname={router.pathname} href={l.href} title={l.title} icon={l.icon} />
@@ -118,18 +119,13 @@ const NavTrainer: React.FC<Props> = ({ user, isAuthenticated }) => {
 
             <NavbarContent className="hidden sm:flex " justify='end'>
                 <NavbarItem>
-                    {!isAuthenticated ? <Link
-                        className={`${router.pathname === '/registrate' ? "bg-primary-400 p-1 px-2 rounded" : ""}`}
-                        href="/registrate"
-                    >
-                        Registrate
-                    </Link> : <Link href={`admin/dashboard`}>
-                        <User
-                            avatarProps={{
-                                src: user?.image
-                            }} name={user?.name} description={user?.email} />
-                    </Link>
-                    }
+
+                    <User
+                        avatarProps={{
+                            src: user?.image
+                        }} name={user?.name} description={user?.email} />
+
+
                 </NavbarItem>
             </NavbarContent>
 
