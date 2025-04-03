@@ -1,11 +1,10 @@
 import { TypesUser } from '@/types/user';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle, User } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle, User } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import MyUserCard from '../../Perfil/MyUserCard';
 import NavLinks from './Links/NavLinks';
 import { SiTrainerroad } from 'react-icons/si';
-import { RiAdminFill } from 'react-icons/ri';
 import { FaClipboardList, FaDumbbell, FaPlusCircle, FaUserFriends } from 'react-icons/fa';
 
 interface Props {
@@ -80,17 +79,39 @@ const NavTrainer: React.FC<Props> = ({ user, isAuthenticated }) => {
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className='hidden sm:flex' justify='center'>
-                <Dropdown className='dark flex flex-col gap-2 my-2'>
+                <Dropdown className='dark flex flex-col gap-2 my-2 w-72 '>
                     <DropdownTrigger>
                         <Button variant="faded" color='default' className='dark'>Paneles</Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                        <DropdownItem>
-                            <NavLinks href='/admin/dashboard' pathname={router.pathname} title='Panel de Admin' icon={<RiAdminFill size={20} />} />
-                        </DropdownItem>
-                        <DropdownItem>
-                            <NavLinks href='/trainer/dashboard' pathname={router.pathname} title='Panel de Entrenador' icon={<SiTrainerroad size={23} />} />
-                        </DropdownItem>
+                        <DropdownSection>
+                            {enlaces.dashboards.map((l) => (
+                                <DropdownItem key={l.title} className='dark'>
+                                    <NavLinks pathname={router.pathname} href={l.href} title={l.title} icon={l.icon} />
+                                </DropdownItem>
+                            ))}
+                        </DropdownSection>
+                        <DropdownSection title={"Usuarios"} className='pl-3'>
+                            {enlaces.users.map((l) => (
+                                <DropdownItem key={l.title} className='dark'>
+                                    <NavLinks pathname={router.pathname} href={l.href} title={l.title} icon={l.icon} />
+                                </DropdownItem>
+                            ))}
+                        </DropdownSection>
+                        <DropdownSection title={"Rutinas"} className='pl-3'>
+                            {enlaces.routines.map((l) => (
+                                <DropdownItem key={l.title} className='dark'>
+                                    <NavLinks pathname={router.pathname} href={l.href} title={l.title} icon={l.icon} />
+                                </DropdownItem>
+                            ))}
+                        </DropdownSection>
+                        <DropdownSection title={"Rutinas"} className='pl-3'>
+                            {enlaces.sets.map((l) => (
+                                <DropdownItem key={l.title} className='dark'>
+                                    <NavLinks pathname={router.pathname} href={l.href} title={l.title} icon={l.icon} />
+                                </DropdownItem>
+                            ))}
+                        </DropdownSection>
                     </DropdownMenu>
                 </Dropdown>
             </NavbarContent>
