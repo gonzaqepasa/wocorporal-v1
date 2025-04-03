@@ -1,6 +1,7 @@
 // components/NavBar.tsx
 import { useAuth } from '@/pages/_AuthProvider';
 import NavAdmin from './Navs/NavAdmin';
+import NavTrainer from './Navs/NavTrainer';
 
 
 
@@ -13,7 +14,7 @@ const NavMain: React.FC = () => {
         case "admin":
             return <NavAdmin user={user} logout={logout} isAuthenticated={isAuthenticated} />;
         case "trainer":
-        // return <NavTrainer user={user} logout={logout} />;
+        return <NavTrainer user={user} logout={logout} isAuthenticated={isAuthenticated} />;
         case "user":
         // return <NavUser user={user} logout={logout} />;
         default:
